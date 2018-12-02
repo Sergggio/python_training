@@ -3,6 +3,7 @@ from selenium import webdriver
 from group import Group
 import unittest
 
+
 class TestAddGroup(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
