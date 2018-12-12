@@ -2,7 +2,6 @@
 
 class ContactHelper():
 
-
     def __init__(self, app):
         self.app = app
 
@@ -23,3 +22,12 @@ class ContactHelper():
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
+
+    def choose(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def delete(self):
+        wd = self.app.wd
+        wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+        wd.switch_to_alert().accept()
