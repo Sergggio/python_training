@@ -1,4 +1,4 @@
-import time
+
 
 class ContactHelper():
 
@@ -51,3 +51,8 @@ class ContactHelper():
         wd.find_element_by_name("home").send_keys(contact.home_phone)
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contact.email)
+
+    def count(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
+        return len(wd.find_elements_by_name("selected[]"))
