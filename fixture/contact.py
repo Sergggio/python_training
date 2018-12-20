@@ -10,34 +10,36 @@ class ContactHelper():
         self.open_add_contact_page()
         self.fill_contact_form(contact)
         wd.find_element_by_name("submit").click()
-        self.return_to_home_page()
+        self.open_home_page()
 
     def open_add_contact_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
+        if not (wd.current_url.endswith("/edit.php") and len(wd.find_elements_by_name("submit")) > 0):
+            wd.find_element_by_link_text("add new").click()
 
-    def return_to_home_page(self):
+    def open_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("searchform")) > 0):
+            wd.find_element_by_link_text("home").click()
 
     def choose(self):
         wd = self.app.wd
-        self.return_to_home_page()
+        self.open_home_page()
         wd.find_element_by_name("selected[]").click()
 
     def delete(self):
         wd = self.app.wd
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
-        self.return_to_home_page()
+        self.open_home_page()
 
     def edit(self, contact):
         wd = self.app.wd
-        self.return_to_home_page()
+        self.open_home_page()
         wd.find_element_by_xpath("(//*[@title='Edit'])").click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
-        self.return_to_home_page()
+        self.open_home_page()
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
