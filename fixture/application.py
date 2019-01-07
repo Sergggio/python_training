@@ -12,6 +12,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+        self.wd.set_window_position(-1350,10)
 
     def is_valid(self):
         try:

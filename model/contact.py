@@ -3,22 +3,22 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, firstname=None, lastname=None, address=None, home_phone=None, email=None, cont_id=None):
+    def __init__(self, firstname=None, lastname=None, address=None, home_phone=None, email=None, id=None):
         self.firstname = firstname
         self.lastname = lastname
         self.address = address
         self.home_phone = home_phone
         self.email = email
-        self.cont_id = cont_id
+        self.id = id
 
     def __repr__(self):
-        return "%s:%s" % (self.cont_id, self.lastname)
+        return "%s:%s:%s" % (self.id, self.lastname, self.firstname)
 
     def __eq__(self, other):
-        return (self.cont_id is None or other.cont_id is None or self.cont_id == other.cont_id) and self.lastname == other.lastname
+        return (self.id is None or other.id is None or self.id == other.id) and self.lastname == other.lastname and self.firstname == other.firstname
 
     def id_or_max(self):
-        if self.cont_id:
-            return int(self.cont_id)
+        if self.id:
+            return int(self.id)
         else:
             return maxsize
