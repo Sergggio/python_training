@@ -1,3 +1,7 @@
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
 from model.contact import Contact
 
 
@@ -36,6 +40,8 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
+        wait = WebDriverWait(wd, 7)
+        wait.until(EC.presence_of_element_located((By.LINK_TEXT, 'home'))).click()
         self.open_home_page()
         self.contact_cache = None
 

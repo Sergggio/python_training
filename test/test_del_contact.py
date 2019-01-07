@@ -3,11 +3,10 @@ from model.contact import Contact
 
 
 def test_delete_first_contact(app):
-    #contact = Contact(firstname="Name2", lastname="LastName2")
+    contact = Contact(firstname="Name2", lastname="LastName2")
     if app.contact.count() == 0:
-        app.contact.create(Contact(firstname="Name2", lastname="LastName2"))
+        app.contact.create(contact)
     old_contacts = app.contact.get_contact_list()
-    #app.contact.choose()
     app.contact.delete()
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) - 1 == len(new_contacts)
