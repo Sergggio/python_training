@@ -34,10 +34,26 @@ class ContactHelper:
     #     wd.find_element_by_name("selected[]").click()
     #     self.contact_cache = None
 
-    def delete(self):
+    # def delete(self):
+    #     wd = self.app.wd
+    #     self.delete_contact_by_index(0)
+    #     self.open_home_page()
+    #     wd.find_element_by_name("selected[]").click()
+    #     wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+    #     wd.switch_to_alert().accept()
+    #     wait = WebDriverWait(wd, 7)
+    #     wait.until(EC.presence_of_element_located((By.LINK_TEXT, 'home'))).click()
+    #     self.open_home_page()
+    #     self.contact_cache = None
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
         wait = WebDriverWait(wd, 7)
@@ -46,6 +62,10 @@ class ContactHelper:
         self.contact_cache = None
 
     def modify_first_contact(self, contact):
+        wd = self.app.wd
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_xpath("(//*[@title='Edit'])").click()
