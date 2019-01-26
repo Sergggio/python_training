@@ -2,6 +2,7 @@
 from model.contact import Contact
 from random import randrange
 
+
 def test_modify_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="temporary_contact1", lastname="temporary_contact1"))
