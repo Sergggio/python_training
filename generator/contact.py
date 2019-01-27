@@ -29,13 +29,13 @@ def random_string(prefix, maxlen):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-testdata =  Contact(firstname="", lastname="", home_phone="", mobile_phone="",
-            work_phone="", secondary_phone="", email=""), + [
-            Contact(firstname=random_string("firstname", 10), lastname=random_string("lastname", 20),
+testdata =  [Contact(firstname="", lastname="", home_phone="", mobile_phone="",
+                     work_phone="", secondary_phone="", email="")] + \
+            [Contact(firstname=random_string("firstname", 10), lastname=random_string("lastname", 20),
             home_phone=random_string("home_phone", 10), mobile_phone=random_string("mobile_phone", 10),
             work_phone=random_string("work_phone", 10), secondary_phone=random_string("secondary_phone", 10),
             email=random_string("email", 20))
-    for i in range(n)
+            for i in range(n)
 ]
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
