@@ -12,7 +12,7 @@ except getopt.GetoptError as err:
     getopt.usage()
     sys.exit(2)
 
-n = 5
+n = 3
 f = "data/contacts.json"
 
 #Edit configuration - Parameters: -n 10 -f data/test.json
