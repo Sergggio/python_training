@@ -2,7 +2,7 @@ from pony.orm import *
 from datetime import datetime
 from model.group import Group
 from model.contact import Contact
-from pymysql.converters import decoders
+from pymysql.converters import *
 
 
 class ORMFixture:
@@ -21,7 +21,17 @@ class ORMFixture:
         id = PrimaryKey(int, column='id')
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
-        deprecated = Optional(datetime, column='deprecated')
+        address = Optional(str, column='address')
+        home_phone = Optional(str, column='home')
+        work_phone = Optional(str, column='work')
+        mobile_phone = Optional(str, column='mobile')
+        secondary_phone = Optional(str, column='phone2')
+        email = Optional(str, column='email')
+        email2 = Optional(str, column='email2')
+        email3 = Optional(str, column='email3')
+        deprecated = Optional(str, column='deprecated')
+        groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts",
+                     lazy=True)
 
     def __init__(self, host, name, user, password):
         self.db.bind('mysql', host=host, database=name, user=user, password=password)
@@ -36,7 +46,10 @@ class ORMFixture:
 
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname)
+            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname,
+                           address=contact.address, home_phone=contact.home_phone, work_phone=contact.work_phone,
+                           mobile_phone=contact.mobile_phone, secondary_phone=contact.secondary_phone,
+                           email=contact.email, email2=contact.email2, email3=contact.email3)
         return list(map(convert, contacts))
 
 

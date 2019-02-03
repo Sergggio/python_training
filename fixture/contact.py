@@ -119,7 +119,7 @@ class ContactHelper:
                 all_email = cells[4].text
                 all_phones = cells[5].text
                 self.contact_cache.append(Contact(id=id, lastname=lastname, firstname=firstname,
-                                                  all_phones_from_home_page=all_phones, address=address, all_email_from_home_page=all_email))
+                                                  all_phones_from_home_page=all_phones, address=address, all_emails_from_home_page=all_email))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
