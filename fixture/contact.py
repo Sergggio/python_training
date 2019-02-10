@@ -98,6 +98,10 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    def click_add_to_button(self):
+        wd = self.app.wd
+        wd.find_element_by_name("add").click()
+
     def count(self):
         wd = self.app.wd
         self.open_home_page()
@@ -172,3 +176,27 @@ class ContactHelper:
         secondary_phone = re.search("P: (.*)", text).group(1)
         return Contact(home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone, secondary_phone=secondary_phone)
+
+    def select_group_by_combobox(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.app.set_value_in_select_by_value("group", id)
+
+    def set_group_by_combobox(self, combo_name, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.app.set_value_in_select_by_value(combo_name, group_id)
+
+    def add_contact_to_group(self, group_id, contact_id):
+        self.open_home_page()
+        self.select_contact_by_id(contact_id)
+        self.set_group_by_combobox("to_group", group_id)
+        self.click_add_to_button()
+        self.contact_cache = None
+
+    def remove_contact_from_group(self, group_id, contact_id, wd):
+        self.open_home_page()
+        self.select_group_by_combobox(group_id)
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("remove").click()
+        self.contact_cache = None

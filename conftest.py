@@ -5,6 +5,7 @@ import importlib
 import jsonpickle
 from fixture.application import Application
 from fixture.db import DbFixture
+from fixture.orm import ORMFixture
 
 fixture = None
 target = None
@@ -33,11 +34,21 @@ def app(request):
 @pytest.fixture(scope="session")
 def db(request):
     db_config = load_config(request.config.getoption("--target"))['db']
-    dbfixture = DbFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
-    def fin():
-        dbfixture.destroy()
-    request.addfinalizer(fin)
+    dbfixture = ORMFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'], password=db_config['password'])
+
+    # def fin():
+    #     dbfixture.destroy()
+    # request.addfinalizer(fin)
     return dbfixture
+
+
+@pytest.fixture(scope="session")
+def db_orm(request):
+    db_config = load_config(request.config.getoption("--target"))['db']
+    dbfixture = ORMFixture(host=db_config['host'], name=db_config['name'], user=db_config['user'],
+                           password=db_config['password'])
+    return dbfixture
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
@@ -57,6 +68,7 @@ def pytest_addoption(parser):
     parser.addoption("--target", action="store", default="target.json")
     parser.addoption("--check_ui", action="store_true")
 
+
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
@@ -69,6 +81,7 @@ def pytest_generate_tests(metafunc):
 
 def load_from_module(module):
     return importlib.import_module("data.%s" % module).testdata
+
 
 def load_from_json(file):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/%s.json" % file)) as f:

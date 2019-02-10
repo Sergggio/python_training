@@ -2,7 +2,7 @@ from selenium import webdriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
-
+from selenium.webdriver.support.ui import Select
 
 class Application:
 
@@ -35,3 +35,25 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
+    def set_value(self, el_name, value):
+        wd = self.wd
+        wd.find_element_by_name(el_name).clear()
+        wd.find_element_by_name(el_name).send_keys(value)
+
+    def set_value_in_select_by_value(self, field_name, value):
+        wd = self.wd
+        if value is not None:
+            Select(wd.find_element_by_name(field_name)).select_by_value(value)
+
+    def set_value_in_select_by_text(self, field_name, text):
+        wd = self.wd
+        if text is not None:
+            Select(wd.find_element_by_name(field_name)).select_by_visible_text(text)
+
+    def change_field_value(self, field_name, text):
+        wd = self.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
