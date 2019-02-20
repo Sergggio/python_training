@@ -3,7 +3,6 @@ selenium
 jsonpickle
 pony
 pymysql
---allow-external mysql-connector-python
 mysql-connector-python
-lxml-4.3.1-cp37-cp37m-win_amd64.whl
+lxml-4.3.1-cp37-cp37mwin32.whl
 pytest-allure-adaptor
