@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import re
 from model.contact import Contact
+import time
 
 
 class ContactHelper:
@@ -37,6 +38,10 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_xpath("//td/a[contains(@href, '%s')]/img[@title='Edit']" % id).click()
+
+    def check_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//input[@id='%s']" % id).click()
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
@@ -188,15 +193,25 @@ class ContactHelper:
         self.app.set_value_in_select_by_value(combo_name, group_id)
 
     def add_contact_to_group(self, group_id, contact_id):
+        wd = self.app.wd
         self.open_home_page()
-        self.select_contact_by_id(contact_id)
-        self.set_group_by_combobox("to_group", group_id)
-        self.click_add_to_button()
+        time.sleep(1)
+        self.check_contact_by_id(contact_id)
+        time.sleep(2)
+        wd.find_element_by_xpath("//select[@name='to_group']/option[@value='%s']" % group_id).click()
+        time.sleep(2)
+        wd.find_element_by_xpath("//input[@name='add']").click()
+        time.sleep(2)
+        wd.find_element_by_xpath("//i/a").click()
+        time.sleep(2)
         self.contact_cache = None
 
-    def remove_contact_from_group(self, group_id, contact_id, wd):
-        self.open_home_page()
-        self.select_group_by_combobox(group_id)
-        self.select_contact_by_id(contact_id)
-        wd.find_element_by_name("remove").click()
+    def remove_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.check_contact_by_id(contact_id)
+        wd.find_element_by_xpath("//input[@name='remove']").click()
+        # self.open_home_page()
+        # self.select_group_by_combobox(group_id)
+        # self.select_contact_by_id(contact_id)
+        # wd.find_element_by_name("remove").click()
         self.contact_cache = None

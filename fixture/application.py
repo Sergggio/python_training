@@ -19,7 +19,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
-        self.wd.set_window_position(-1350,10)
+        #self.wd.set_window_position(-1350,10)
         self.base_url = base_url
 
     def is_valid(self):
